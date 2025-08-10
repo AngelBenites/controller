@@ -13,9 +13,9 @@ services:
       - app_network
 
   backend:
-  build:
-    context: ./backend
-    dockerfile: Dockerfile
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
   image: hwperu/controller_backend:latest
   environment:
     DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
