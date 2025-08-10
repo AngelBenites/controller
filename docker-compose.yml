@@ -12,13 +12,11 @@ services:
     networks:
       - app_network
 
-  backend:
+    backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
     image: hwperu/controller_backend:latest
-    # Construir y subir antes de desplegar:
-    # docker build -t hwperu/controller_backend:latest ./backend
-    # docker push hwperu/controller_backend:latest
     environment:
       DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
       JWT_SECRET: super_secret_key
@@ -37,10 +35,8 @@ services:
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     image: hwperu/controller_frontend:latest
-    # Construir y subir antes de desplegar:
-    # docker build -t hwperu/controller_frontend:latest ./frontend
-    # docker push hwperu/controller_frontend:latest
     environment:
       NEXT_PUBLIC_API_URL: https://backend.hwperu.com
     depends_on:
