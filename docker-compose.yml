@@ -3,7 +3,6 @@ version: "3.9"
 services:
   db:
     image: postgres:16
-    container_name: controller_db
     environment:
       POSTGRES_USER: controller_user
       POSTGRES_PASSWORD: controller_pass
@@ -14,8 +13,10 @@ services:
       - app_network
 
   backend:
-    build: ./backend
-    container_name: controller_backend
+    image: hwperu/controller_backend:latest
+    # Antes de deployar, construye y sube la imagen:
+    # docker build -t hwperu/controller_backend:latest ./backend
+    # docker push hwperu/controller_backend:latest
     environment:
       DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
       JWT_SECRET: super_secret_key
@@ -28,12 +29,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
-      - "traefik.http.services.controller-backend.loadbalancer.server.port=4444"
+      - "traefik.http.services.controller-backend.loadbalancer.server.port=4000"
       - "traefik.docker.network=traefik_public"
 
   frontend:
-    build: ./frontend
-    container_name: controller_frontend
+    image: hwperu/controller_frontend:latest
+    # docker build -t hwperu/controller_frontend:latest ./frontend
+    # docker push hwperu/controller_frontend:latest
     environment:
       NEXT_PUBLIC_API_URL: https://backend.hwperu.com
     depends_on:
@@ -44,19 +46,18 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
-      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3333"
+      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3000"
       - "traefik.docker.network=traefik_public"
 
   adminer:
-    image: adminer
-    container_name: controller_adminer
+    image: adminer:latest
     networks:
       - app_network
       - traefik_public
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
-      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8888"
+      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8080"
       - "traefik.docker.network=traefik_public"
 
 volumes:
