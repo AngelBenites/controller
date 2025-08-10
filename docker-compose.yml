@@ -8,10 +8,10 @@ services:
       POSTGRES_USER: controller_user
       POSTGRES_PASSWORD: controller_pass
       POSTGRES_DB: controller
-    ports:
-      - "5435:5432" # usamos puerto diferente para no chocar con tu postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    networks:
+      - app_network
 
   backend:
     build: ./backend
@@ -20,28 +20,50 @@ services:
       DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
       JWT_SECRET: super_secret_key
       PORT: 4000
-    ports:
-      - "4000:4000"
     depends_on:
       - db
+    networks:
+      - app_network
+      - traefik_public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
+      - "traefik.http.services.controller-backend.loadbalancer.server.port=4444"
+      - "traefik.docker.network=traefik_public"
 
   frontend:
     build: ./frontend
     container_name: controller_frontend
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:4000
-    ports:
-      - "3000:3000"
+      NEXT_PUBLIC_API_URL: https://backend.hwperu.com
     depends_on:
       - backend
+    networks:
+      - app_network
+      - traefik_public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
+      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3333"
+      - "traefik.docker.network=traefik_public"
 
   adminer:
     image: adminer
     container_name: controller_adminer
-    ports:
-      - "8085:8080"
-    depends_on:
-      - db
+    networks:
+      - app_network
+      - traefik_public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
+      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8888"
+      - "traefik.docker.network=traefik_public"
 
 volumes:
   db_data:
+
+networks:
+  app_network:
+    external: true
+  traefik_public:
+    external: true
