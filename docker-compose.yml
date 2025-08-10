@@ -13,24 +13,25 @@ services:
       - app_network
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: hwperu/controller_backend:latest
-    environment:
-      DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
-      JWT_SECRET: super_secret_key
-      PORT: 4000
-    depends_on:
-      - db
-    networks:
-      - app_network
-      - traefik_public
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
-      - "traefik.http.services.controller-backend.loadbalancer.server.port=4000"
-      - "traefik.docker.network=traefik_public"
+  build:
+    context: ./backend
+    dockerfile: Dockerfile
+  image: hwperu/controller_backend:latest
+  environment:
+    DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
+    JWT_SECRET: super_secret_key
+    PORT: 4000
+  depends_on:
+    - db
+  networks:
+    - app_network
+    - traefik_public
+  labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
+    - "traefik.http.services.controller-backend.loadbalancer.server.port=4000"
+    - "traefik.docker.network=traefik_public"
+
 
   frontend:
     build:
