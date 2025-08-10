@@ -16,7 +16,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-  image: hwperu/controller_backend:latest
+    image: hwperu/controller_backend:latest
   environment:
     DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
     JWT_SECRET: super_secret_key
