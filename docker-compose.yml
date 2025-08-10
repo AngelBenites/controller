@@ -20,7 +20,7 @@ services:
     environment:
       DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
       JWT_SECRET: super_secret_key
-      PORT: 4000
+      PORT: 4444
     depends_on:
       - db
     networks:
@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
-      - "traefik.http.services.controller-backend.loadbalancer.server.port=4000"
+      - "traefik.http.services.controller-backend.loadbalancer.server.port=4444"
       - "traefik.docker.network=traefik_public"
 
   frontend:
@@ -46,7 +46,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
-      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3000"
+      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3333"
       - "traefik.docker.network=traefik_public"
 
   adminer:
@@ -57,7 +57,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
-      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8080"
+      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8888"
       - "traefik.docker.network=traefik_public"
 
 volumes:
