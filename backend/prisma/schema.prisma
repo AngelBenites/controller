@@ -7,16 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  users     User[]
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
   role      String   @default("employee")
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
   createdAt DateTime @default(now())
-}
-
-model Company {
-  id    Int    @id @default(autoincrement())
-  name  String
-  users User[]
 }
