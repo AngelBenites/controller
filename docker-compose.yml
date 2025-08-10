@@ -13,7 +13,7 @@ services:
       - app_network
 
   backend:
-    image: hwperu/controller_backend:latest
+    image: hwperu/backend:latest
     # Antes de deployar, construye y sube la imagen:
     # docker build -t hwperu/controller_backend:latest ./backend
     # docker push hwperu/controller_backend:latest
@@ -33,7 +33,7 @@ services:
       - "traefik.docker.network=traefik_public"
 
   frontend:
-    image: hwperu/controller_frontend:latest
+    image: hwperu/frontend:latest
     # docker build -t hwperu/controller_frontend:latest ./frontend
     # docker push hwperu/controller_frontend:latest
     environment:
