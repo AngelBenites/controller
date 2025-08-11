@@ -13,9 +13,6 @@ services:
       - app_network
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
     image: hwperu/controller_backend:latest
     environment:
       DATABASE_URL: postgres://controller_user:controller_pass@db:5432/controller
@@ -26,8 +23,6 @@ services:
     networks:
       - app_network
       - traefik_public
-    ports:
-      - "4000:4000"   # PUBLICADO: host:4000 -> container:4000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
@@ -37,9 +32,6 @@ services:
       - "traefik.docker.network=traefik_public"
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
     image: hwperu/controller_frontend:latest
     environment:
       NEXT_PUBLIC_API_URL: https://backend.hwperu.com
@@ -48,8 +40,6 @@ services:
     networks:
       - app_network
       - traefik_public
-    ports:
-      - "2000:3000"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
@@ -63,8 +53,6 @@ services:
     networks:
       - app_network
       - traefik_public
-    ports:
-      - "8081:8080"   # PUBLICADO: host:8080 -> container:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
