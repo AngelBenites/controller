@@ -5,7 +5,10 @@ import { PingController } from './ping.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController, PingController],
+  controllers: [
+    AppController,
+    PingController // 👈 lo registras aquí
+  ],
   providers: [AppService],
 })
 export class AppModule {}
