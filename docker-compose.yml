@@ -48,8 +48,6 @@ services:
     networks:
       - app_network
       - traefik_public
-    ports:
-      - "3002:3000"  # PUBLICADO: host:3000 -> container:3000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
