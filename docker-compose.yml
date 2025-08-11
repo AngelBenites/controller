@@ -40,6 +40,8 @@ services:
     networks:
       - app_network
       - traefik_public
+    ports:
+      - "2000:3000"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
