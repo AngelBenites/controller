@@ -48,12 +48,14 @@ services:
     networks:
       - app_network
       - traefik_public
+    ports:
+      - "2000:3000"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
       - "traefik.http.routers.controller-frontend.entrypoints=websecure"
       - "traefik.http.routers.controller-frontend.tls.certresolver=le"
-      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3000"
+      - "traefik.http.services.controller-frontend.loadbalancer.server.port=2000"
       - "traefik.docker.network=traefik_public"
 
   adminer:
