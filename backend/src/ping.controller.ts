@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class PingController {
   @Get('ping')
   getPing() {
-    return { message: 'pong', time: new Date() };
+    return { message: 'pong', time: new Date().toISOString() };
   }
 }
