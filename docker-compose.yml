@@ -24,7 +24,7 @@ services:
       - app_network
       - traefik_public
     ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
+      - 4000:4000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
@@ -43,13 +43,13 @@ services:
       - app_network
       - traefik_public
     ports:
-      - "${FRONTEND_HOST_PORT}:${FRONTEND_PORT}"
+      - 2000:3000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
       - "traefik.http.routers.controller-frontend.entrypoints=websecure"
       - "traefik.http.routers.controller-frontend.tls.certresolver=le"
-      - "traefik.http.services.controller-frontend.loadbalancer.server.port=${FRONTEND_PORT}"
+      - "traefik.http.services.controller-frontend.loadbalancer.server.port=3000"
       - "traefik.docker.network=traefik_public"
 
   adminer:
@@ -58,13 +58,13 @@ services:
       - app_network
       - traefik_public
     ports:
-      - "${ADMINER_HOST_PORT}:${ADMINER_PORT}"
+      - 8082:8080
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
       - "traefik.http.routers.controller-adminer.entrypoints=websecure"
       - "traefik.http.routers.controller-adminer.tls.certresolver=le"
-      - "traefik.http.services.controller-adminer.loadbalancer.server.port=${ADMINER_PORT}"
+      - "traefik.http.services.controller-adminer.loadbalancer.server.port=8082"
       - "traefik.docker.network=traefik_public"
 
 volumes:
