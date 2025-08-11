@@ -37,4 +37,6 @@ jobs:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://backend.hwperu.com
           tags: ${{ secrets.DOCKER_USERNAME }}/controller_frontend:latest
