@@ -29,6 +29,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-backend.rule=Host(`backend.hwperu.com`)"
+      - "traefik.http.routers.controller-backend.entrypoints=websecure"
+      - "traefik.http.routers.controller-backend.tls.certresolver=le"
       - "traefik.http.services.controller-backend.loadbalancer.server.port=4000"
       - "traefik.docker.network=traefik_public"
 
@@ -47,6 +49,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-frontend.rule=Host(`frontend.hwperu.com`)"
+      - "traefik.http.routers.controller-frontend.entrypoints=websecure"
+      - "traefik.http.routers.controller-frontend.tls.certresolver=le"
       - "traefik.http.services.controller-frontend.loadbalancer.server.port=3000"
       - "traefik.docker.network=traefik_public"
 
@@ -58,6 +62,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.controller-adminer.rule=Host(`admin.hwperu.com`)"
+      - "traefik.http.routers.controller-adminer.entrypoints=websecure"
+      - "traefik.http.routers.controller-adminer.tls.certresolver=le"
       - "traefik.http.services.controller-adminer.loadbalancer.server.port=8080"
       - "traefik.docker.network=traefik_public"
 
