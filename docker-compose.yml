@@ -17,7 +17,7 @@ services:
     environment:
       DATABASE_URL: ${DATABASE_URL}
       JWT_SECRET: ${JWT_SECRET}
-      PORT: ${E_PORT}
+      PORT: 4000
     depends_on:
       - db
     networks:
