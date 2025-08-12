@@ -1,4 +1,3 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlanillasService } from './planillas.service';
@@ -9,5 +8,6 @@ import { Planilla } from './entities/planilla.entity';
   imports: [TypeOrmModule.forFeature([Planilla])],
   controllers: [PlanillasController],
   providers: [PlanillasService],
+  exports: [PlanillasService],
 })
 export class PlanillasModule {}
