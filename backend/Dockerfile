@@ -9,7 +9,7 @@ COPY package*.json ./
 RUN apk add --no-cache python3 make g++ build-base libc6-compat
 
 # Instalar todas las dependencias (dev y prod)
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copiar el resto del código fuente
 COPY . .
