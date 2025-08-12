@@ -37,5 +37,5 @@ COPY --from=builder /app/package.json ./
 EXPOSE 4000
 
 # Comando para iniciar la aplicación Esperar hasta que Postgres responda antes de iniciar
-CMD ["sh", "-c", "dockerize -wait tcp://db:5432 -timeout 60s && node dist/main.js"]
+CMD ["sh", "-c", "dockerize -wait tcp://db:5432 -timeout 120s && node dist/main.js"]
 
