@@ -16,15 +16,18 @@ export class EmpleadosController {
     return this.empleadosService.findOne(id);
   }
 
-  @Post()
-  create(@Body() empleadoData: Partial<Empleado>): Promise<Empleado> {
-    return this.empleadosService.create(empleadoData);
-  }
+  import { CreateEmpleadoDto } from './dto/create-empleado.dto';
+import { UpdateEmpleadoDto } from './dto/update-empleado.dto';
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateData: Partial<Empleado>): Promise<Empleado> {
-    return this.empleadosService.update(id, updateData);
-  }
+@Post()
+create(@Body() empleadoData: CreateEmpleadoDto): Promise<Empleado> {
+  return this.empleadosService.create(empleadoData);
+}
+
+@Put(':id')
+update(@Param('id') id: string, @Body() updateData: UpdateEmpleadoDto): Promise<Empleado> {
+  return this.empleadosService.update(id, updateData);
+}
 
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
