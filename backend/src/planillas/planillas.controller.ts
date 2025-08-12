@@ -24,10 +24,7 @@ export class PlanillasController {
   }
 
   @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updatePlanillaDto: UpdatePlanillaDto,
-  ): Promise<Planilla> {
+  update(@Param('id') id: string, @Body() updatePlanillaDto: UpdatePlanillaDto): Promise<Planilla> {
     return this.planillasService.update(id, updatePlanillaDto);
   }
 
