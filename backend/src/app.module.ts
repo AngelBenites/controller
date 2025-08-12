@@ -5,7 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { EmpleadosModule } from './empleados/empleados.module';
 import { PlanillasModule } from './planillas/planillas.module';
-import { FinanzasModule } from './finanzas/finanzas.module';
+//import { FinanzasModule } from './finanzas/finanzas.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
