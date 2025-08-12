@@ -23,7 +23,7 @@ import { PingController } from './ping.controller';
     AuthModule,
     EmpleadosModule,
     PlanillasModule,   // <-- Agrega aquí el módulo planillas
-    // FinanzasModule  // <-- Luego agrega este cuando tengas listo ese módulo
+    FinanzasModule  // <-- Luego agrega este cuando tengas listo ese módulo
   ],
   controllers: [
     AppController,
