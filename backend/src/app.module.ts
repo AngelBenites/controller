@@ -29,7 +29,7 @@ import { PingController } from './ping.controller';
     AuthModule,
     EmpleadosModule,
     PlanillasModule,
-    FinanzasModule,
+    //FinanzasModule,
   ],
   controllers: [AppController, PingController],
   providers: [AppService],
