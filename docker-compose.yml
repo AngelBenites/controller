@@ -20,6 +20,7 @@ services:
       PORT: 4000
     depends_on:
       - db
+      command: sh -c "dockerize -wait tcp://db:5432 -timeout 60s && node dist/main.js"
     networks:
       - app_network
       - traefik_public
