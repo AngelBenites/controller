@@ -4,23 +4,23 @@ export class CreateEmpleadoDto {
   @IsString()
   @IsNotEmpty()
   @Length(8, 8, { message: 'El DNI debe tener exactamente 8 caracteres' })
-  dni: string;
+  dni!: string;
 
   @IsString()
   @IsNotEmpty()
-  nombre: string;
+  nombre!: string;
 
   @IsString()
   @IsNotEmpty()
-  apellido: string;
+  apellido!: string;
 
   @IsString()
   @IsNotEmpty()
-  cargo: string;
+  cargo!: string;
 
   @IsNumber()
   @Min(0)
-  salario: number;
+  salario!: number;
 
   @IsOptional()
   @IsDateString()
