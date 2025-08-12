@@ -20,12 +20,19 @@ export class EmpleadosController {
 
   @Post()
   create(@Body() empleadoData: CreateEmpleadoDto): Promise<Empleado> {
-    return this.empleadosService.create(empleadoData);
+    if (empleadoData.fechaIngreso) {
+      empleadoData.fechaIngreso = new Date(empleadoData.fechaIngreso);
+    }
+    // Convertimos a Partial<Empleado> para evitar error de tipo
+    return this.empleadosService.create(empleadoData as unknown as Partial<Empleado>);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateData: UpdateEmpleadoDto): Promise<Empleado> {
-    return this.empleadosService.update(id, updateData);
+    if (updateData.fechaIngreso) {
+      updateData.fechaIngreso = new Date(updateData.fechaIngreso);
+    }
+    return this.empleadosService.update(id, updateData as unknown as Partial<Empleado>);
   }
 
   @Delete(':id')
