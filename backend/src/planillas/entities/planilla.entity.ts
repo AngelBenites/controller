@@ -3,29 +3,30 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity()
 export class Planilla {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id?: string;
 
   @Column()
-  empleadoId: string;
+  empleadoId?: string;
 
   @Column()
-  mes: number;
+  mes?: number;
 
   @Column()
-  año: number;
+  año?: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  sueldoBruto: number;
+  sueldoBruto?: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  descuentos: number;
+  descuentos?: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  aportes: number;
+  aportes?: number;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  sueldoNeto: number;
+  sueldoNeto?: number;
 
   @Column({ type: 'date' })
-  fechaPago: Date;
+  fechaPago?: Date;
 }
+
