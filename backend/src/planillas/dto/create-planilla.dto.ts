@@ -2,32 +2,32 @@ import { IsString, IsInt, Min, Max, IsDateString, IsNumber, Min as MinNumber } f
 
 export class CreatePlanillaDto {
   @IsString()
-  empleadoId: string;
+  empleadoId?: string;
 
   @IsInt()
   @Min(1)
   @Max(12)
-  mes: number;
+  mes?: number;
 
   @IsInt()
-  año: number;
+  año?: number;
 
   @IsNumber()
   @MinNumber(0)
-  sueldoBruto: number;
+  sueldoBruto?: number;
 
   @IsNumber()
   @MinNumber(0)
-  descuentos: number;
+  descuentos?: number;
 
   @IsNumber()
   @MinNumber(0)
-  aportes: number;
+  aportes?: number;
 
   @IsNumber()
   @MinNumber(0)
-  sueldoNeto: number;
+  sueldoNeto?: number;
 
   @IsDateString()
-  fechaPago: string;
+  fechaPago?: string;
 }
