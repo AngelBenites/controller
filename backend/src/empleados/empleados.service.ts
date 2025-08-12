@@ -1,35 +1,42 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
-import { EmpleadosService } from './empleados.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Empleado } from './entities/empleado.entity';
-import { CreateEmpleadoDto } from './dto/create-empleado.dto';   // ← aquí, arriba
-import { UpdateEmpleadoDto } from './dto/update-empleado.dto';   // ← aquí, arriba
 
-@Controller('empleados')
-export class EmpleadosController {
-  constructor(private readonly empleadosService: EmpleadosService) {}
+@Injectable()
+export class EmpleadosService {
+  constructor(
+    @InjectRepository(Empleado)
+    private readonly empleadoRepository: Repository<Empleado>,
+  ) {}
 
-  @Get()
   findAll(): Promise<Empleado[]> {
-    return this.empleadosService.findAll();
+    return this.empleadoRepository.find();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<Empleado> {
-    return this.empleadosService.findOne(id);
+  async findOne(id: string): Promise<Empleado> {
+    const empleado = await this.empleadoRepository.findOneBy({ id });
+    if (!empleado) {
+      throw new NotFoundException(`Empleado con id ${id} no encontrado`);
+    }
+    return empleado;
   }
 
-  @Post()
-  create(@Body() empleadoData: CreateEmpleadoDto): Promise<Empleado> {
-    return this.empleadosService.create(empleadoData);
+  create(empleadoData: Partial<Empleado>): Promise<Empleado> {
+    const empleado = this.empleadoRepository.create(empleadoData);
+    return this.empleadoRepository.save(empleado);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateData: UpdateEmpleadoDto): Promise<Empleado> {
-    return this.empleadosService.update(id, updateData);
+  async update(id: string, updateData: Partial<Empleado>): Promise<Empleado> {
+    const empleado = await this.findOne(id);
+    Object.assign(empleado, updateData);
+    return this.empleadoRepository.save(empleado);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
-    return this.empleadosService.remove(id);
+  async remove(id: string): Promise<void> {
+    const result = await this.empleadoRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Empleado con id ${id} no encontrado`);
+    }
   }
 }
