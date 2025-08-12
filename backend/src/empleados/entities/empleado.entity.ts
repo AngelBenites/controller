@@ -4,22 +4,22 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity('empleados')
 export class Empleado {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
   @Column({ length: 8, unique: true })
-  dni: string;
+  dni!: string;
 
   @Column({ length: 100 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ length: 100 })
-  apellido: string;
+  apellido!: string;
 
   @Column()
-  cargo: string;
+  cargo!: string;
 
   @Column('decimal', { precision: 10, scale: 2 })
-  salario: number;
+  salario!: number;
 
   @Column({ type: 'date', nullable: true })
   fechaIngreso?: Date;
