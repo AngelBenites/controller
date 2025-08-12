@@ -19,21 +19,22 @@ export class EmpleadosController {
   }
 
   @Post()
-  create(@Body() empleadoData: CreateEmpleadoDto): Promise<Empleado> {
-    if (empleadoData.fechaIngreso) {
-      empleadoData.fechaIngreso = new Date(empleadoData.fechaIngreso);
-    }
-    // Convertimos a Partial<Empleado> para evitar error de tipo
-    return this.empleadosService.create(empleadoData as unknown as Partial<Empleado>);
-  }
+create(@Body() empleadoData: CreateEmpleadoDto): Promise<Empleado> {
+  const empleadoToCreate: Partial<Empleado> = {
+    ...empleadoData,
+    fechaIngreso: empleadoData.fechaIngreso ? new Date(empleadoData.fechaIngreso) : undefined,
+  };
+  return this.empleadosService.create(empleadoToCreate);
+}
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateData: UpdateEmpleadoDto): Promise<Empleado> {
-    if (updateData.fechaIngreso) {
-      updateData.fechaIngreso = new Date(updateData.fechaIngreso);
-    }
-    return this.empleadosService.update(id, updateData as unknown as Partial<Empleado>);
-  }
+@Put(':id')
+update(@Param('id') id: string, @Body() updateData: UpdateEmpleadoDto): Promise<Empleado> {
+  const empleadoToUpdate: Partial<Empleado> = {
+    ...updateData,
+    fechaIngreso: updateData.fechaIngreso ? new Date(updateData.fechaIngreso) : undefined,
+  };
+  return this.empleadosService.update(id, empleadoToUpdate);
+}
 
   @Delete(':id')
   remove(@Param('id') id: string): Promise<void> {
